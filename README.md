@@ -135,9 +135,18 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Links
 
-*   **Project Website:** `darkwire.cyb3r17.space`
+*   **Project Website:** `darkwire.cyb3r17.space` (will be online temporarily)
 *   **GitHub Repository:** `github.com/cyb3r17/darkwire` (You are here!)
 *   **Follow Updates (X/Twitter):** `x.com/cyb3r_17`
+
+
+## Videos:
+
+transmitter node with dakrwire gui
+<video src="https://github.com/user-attachments/assets/da19390c-9608-41bd-924a-bcd7f17aab93" controls width="100%"></video>
+
+receiver node with arduino IDE listening to LoRa inputs and printing them to the serial monitor
+<video src="https://github.com/user-attachments/assets/525d0014-25df-46ff-83b7-58066d4e5735" controls width="100%"></video>
 
 ## Acknowledgements
 
