@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>darkwire - Freedom to Transact Without Borders</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&family=VT323&display=swap');
+        
+        :root {
+            --dark: #0a0a0a;
+            --darker: #000000;
+            --light: #00ff41;
+            --light-dim: #11a836;
+            --light-dimmer: #0d7a28;
+            --mid-gray: #111;
+            --light-gray: #333;
+            --accent: #ff003c;
+            --accent-dim: #aa0029;
+            --accent2: #00b4d8;
+            --terminal-bg: rgba(0, 10, 2, 0.9);
+            --glitch-shadow: #ff00c1;
+            --terminal-border: #00ff41;
+            --terminal-border-dim: #007718;
+            --cyber-grid: rgba(0, 255, 65, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Fira Code', monospace;
+        }
+        
+        body {
+            background-color: var(--dark);
+            background-image: 
+                linear-gradient(0deg, transparent 24%, var(--cyber-grid) 25%, var(--cyber-grid) 26%, transparent 27%, transparent 74%, var(--cyber-grid) 75%, var(--cyber-grid) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, var(--cyber-grid) 25%, var(--cyber-grid) 26%, transparent 27%, transparent 74%, var(--cyber-grid) 75%, var(--cyber-grid) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;
+            color: var(--light);
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 2px);
+            pointer-events: none;
+            z-index: 1000;
+            animation: scanlines 8s linear infinite;
+        }
+        
+        @keyframes scanlines {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 0 100%;
+            }
+        }
+        
+        .glitch {
+            position: relative;
+            color: var(--light);
+            text-shadow: 0.05em 0 0 var(--glitch-shadow), -0.025em -0.05em 0 rgba(0, 255, 65, 0.75);
+            animation: glitch 3s infinite;
+        }
+        
+        @keyframes glitch {
+            0% {
+                text-shadow: 0.05em 0 0 var(--glitch-shadow), -0.025em -0.05em 0 rgba(0, 255, 65, 0.75);
+            }
+            15% {
+                text-shadow: 0.05em 0 0 var(--glitch-shadow), -0.025em -0.05em 0 rgba(0, 255, 65, 0.75);
+            }
+            16% {
+                text-shadow: -0.05em -0.025em 0 var(--glitch-shadow), 0.025em 0.025em 0 rgba(0, 255, 65, 0.75);
+            }
+            49% {
+                text-shadow: -0.05em -0.025em 0 var(--glitch-shadow), 0.025em 0.025em 0 rgba(0, 255, 65, 0.75);
+            }
+            50% {
+                text-shadow: 0.025em 0.05em 0 var(--glitch-shadow), 0.05em 0 0 rgba(0, 255, 65, 0.75);
+            }
+            99% {
+                text-shadow: 0.025em 0.05em 0 var(--glitch-shadow), 0.05em 0 0 rgba(0, 255, 65, 0.75);
+            }
+            100% {
+                text-shadow: 0.05em 0 0 var(--glitch-shadow), -0.025em -0.05em 0 rgba(0, 255, 65, 0.75);
+            }
+        }
+        
+        .terminal {
+            background: var(--terminal-bg);
+            border: 1px solid var(--terminal-border);
+            border-radius: 4px;
+            box-shadow: 0 0 10px var(--light-dimmer), inset 0 0 10px rgba(0, 255, 65, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .terminal::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: linear-gradient(to right, var(--terminal-border-dim), var(--terminal-border), var(--terminal-border-dim));
+            opacity: 0.7;
+        }
+        
+        header {
+            background: linear-gradient(135deg, rgba(0, 10, 2, 0.9), rgba(0, 20, 5, 0.9)), url('/api/placeholder/1400/400') center/cover;
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            border-bottom: 1px solid var(--terminal-border);
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(var(--cyber-grid) 1px, transparent 0);
+            background-size: 30px 30px;
+            z-index: -1;
+            opacity: 0.5;
+        }
+        
+        .logo {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            letter-spacing: 1px;
+            font-family: 'VT323', monospace;
+            text-transform: lowercase;
+            position: relative;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            font-family: 'VT323', monospace;
+            position: relative;
+            display: inline-block;
+            text-transform: uppercase;
+        }
+        
+        h1::after {
+            content: "_";
+            animation: blink 1s step-end infinite;
+        }
+        
+        .tagline {
+            font-size: 1.4rem;
+            margin-bottom: 2rem;
+            font-weight: 400;
+            opacity: 0.9;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            font-family: 'Fira Code', monospace;
+        }
+        
+        .header-buttons {
+            position: relative;
+        }
+        
+        .button {
+            display: inline-block;
+            background-color: var(--dark);
+            color: var(--light);
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            border-radius: 0;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border: 1px solid var(--light);
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 5px var(--light-dimmer);
+        }
+        
+        .button:hover {
+            background-color: var(--light);
+            color: var(--dark);
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px var(--light);
+        }
+        
+        .button::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 1px solid var(--light);
+            opacity: 0;
+            transition: 0.3s ease;
+        }
+        
+        .button:hover::before {
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            opacity: 0.5;
+        }
+        
+        .button.primary {
+            background-color: var(--accent-dim);
+            color: white;
+            margin-right: 1rem;
+            border-color: var(--accent);
+            box-shadow: 0 0 8px var(--accent-dim);
+        }
+        
+        .button.primary:hover {
+            background-color: var(--accent);
+            box-shadow: 0 0 15px var(--accent);
+        }
+        
+        .button.secondary {
+            background-color: transparent;
+            border: 1px solid var(--light);
+            color: var(--light);
+        }
+        
+        .how-it-works {
+            padding: 5rem 2rem;
+            background: var(--dark);
+            position: relative;
+        }
+        
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.2rem;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 1rem;
+            font-family: 'VT323', monospace;
+            letter-spacing: 1px;
+            color: var(--light);
+            text-transform: uppercase;
+        }
+        
+        .section-title::before {
+            content: "<";
+            position: absolute;
+            left: -20px;
+            top: 0;
+            opacity: 0.7;
+        }
+        
+        .section-title::after {
+            content: ">";
+            position: absolute;
+            right: -20px;
+            top: 0;
+            opacity: 0.7;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature {
+            padding: 2rem;
+            background-color: var(--terminal-bg);
+            border-radius: 4px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--terminal-border);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 10px var(--light-dimmer);
+        }
+        
+        .feature::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--light-dimmer), var(--light), var(--light-dimmer));
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 0 15px var(--light);
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            display: inline-block;
+            text-shadow: 0 0 10px var(--accent-dim);
+        }
+        
+        .feature h3 {
+            margin-bottom: 1rem;
+            font-weight: 600;
+            font-family: 'Fira Code', monospace;
+            color: var(--light);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .feature h3::before {
+            content: "# ";
+            opacity: 0.7;
+        }
+        
+        .deployment {
+            padding: 5rem 2rem;
+            background-color: var(--dark);
+            position: relative;
+        }
+        
+        .section-desc {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            opacity: 0.9;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+        }
+        
+        .deployment-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+        
+        .use-cases {
+            padding: 5rem 2rem;
+            background-color: var(--dark);
+            border-top: 1px dashed var(--terminal-border-dim);
+            position: relative;
+        }
+        
+        .use-cases .deployment-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+        
+        .deployment-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 10px var(--light-dimmer);
+            background-color: var(--terminal-bg);
+            border: 1px solid var(--terminal-border-dim);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .deployment-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 15px var(--light);
+            border-color: var(--terminal-border);
+        }
+        
+        .deployment-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            filter: sepia(50%) hue-rotate(80deg) brightness(0.8) contrast(1.2);
+            transition: filter 0.3s ease;
+            border-bottom: 1px solid var(--terminal-border-dim);
+        }
+        
+        .deployment-item:hover .deployment-image {
+            filter: sepia(30%) hue-rotate(60deg) brightness(0.9) contrast(1.1);
+        }
+        
+        .deployment-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .deployment-item h3 {
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--light);
+            font-family: 'Fira Code', monospace;
+        }
+        
+        .deployment-item h3::before {
+            content: "$ ";
+            color: var(--accent);
+            opacity: 0.8;
+        }
+        
+        .deployment-item p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+            font-family: 'Fira Code', monospace;
+        }
+        
+        .learn-more {
+            align-self: flex-start;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            opacity: 0.9;
+            transition: opacity 0.3s, color 0.3s;
+            font-family: 'Fira Code', monospace;
+        }
+        
+        .learn-more i {
+            margin-left: 5px;
+            font-size: 0.8rem;
+        }
+        
+        .learn-more:hover {
+            opacity: 1;
+            color: var(--light);
+        }
+        
+        .tech-specs {
+            padding: 5rem 2rem;
+            background: var(--dark);
+            position: relative;
+            border-top: 1px dashed var(--terminal-border-dim);
+        }
+        
+        .specs-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .specs-image {
+            position: relative;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--terminal-border-dim);
+        }
+        
+        .specs-image img {
+            filter: sepia(50%) hue-rotate(80deg) brightness(0.8) contrast(1.2);
+        }
+        
+        .specs-content h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+            color: var(--light);
+            font-family: 'VT323', monospace;
+            text-transform: uppercase;
+        }
+        
+        .specs-content h2::after {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 2px;
+            background: var(--terminal-border-dim);
+            bottom: 0;
+            left: 0;
+        }
+        
+        .specs-content h2::before {
+            content: "//";
+            position: absolute;
+            left: -25px;
+            top: 0;
+            color: var(--accent);
+            opacity: 0.8;
+        }
+        
+        .specs-list {
+            margin-left: 0;
+            list-style-type: none;
+        }
+        
+        .specs-list li {
+            margin-bottom: 1.2rem;
+            padding-left: 2rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            font-family: 'Fira Code', monospace;
+        }
+        
+        .specs-list li i {
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+        
+        .cta {
+            padding: 5rem 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(0, 10, 2, 0.95), rgba(17, 2, 8, 0.95));
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid var(--terminal-border-dim);
+        }
+        
+        .cta::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255, 0, 60, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 0, 60, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: 0;
+        }
+        
+        .cta h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+            font-family: 'VT323', monospace;
+            text-transform: uppercase;
+            color: var(--light);
+        }
+        
+        .cta p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+            font-family: 'Fira Code', monospace;
+        }
+        
+        footer {
+            padding: 2rem;
+            background-color: var(--darker);
+            text-align: center;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--terminal-border-dim);
+            position: relative;
+            font-family: 'Fira Code', monospace;
+        }
+        
+        footer p {
+            opacity: 0.7;
+        }
+        
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        a:hover {
+            color: var(--light);
+            text-decoration: none;
+        }
+        
+        /* Animated effects */
+        @keyframes flicker {
+            0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+                opacity: 0.99;
+            }
+            20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+                opacity: 0.4;
+            }
+        }
+        
+        .animated-border {
+            position: relative;
+        }
+        
+        .animated-border::before {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border: 1px solid var(--light-dimmer);
+            animation: borderflow 8s linear infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes borderflow {
+            0% {
+                clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            }
+            25% {
+                clip-path: polygon(0% 0%, 33% 0%, 33% 100%, 0% 100%);
+            }
+            50% {
+                clip-path: polygon(33% 0%, 66% 0%, 66% 100%, 33% 100%);
+            }
+            75% {
+                clip-path: polygon(66% 0%, 100% 0%, 100% 100%, 66% 100%);
+            }
+            100% {
+                clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+            }
+        }
+        
+        @keyframes noise {
+            0%, 3%, 5%, 42%, 44%, 100% { opacity: 1; transform: scaleY(1); }
+            4.3% { opacity: 1; transform: scaleY(4); }
+            43% { opacity: 1; transform: scaleX(10) rotate(60deg); }
+        }
+        
+        /* Add some ASCII art to the background */
+        .ascii-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.03;
+            font-family: monospace;
+            font-size: 14px;
+            white-space: pre;
+            overflow: hidden;
+            color: var(--light);
+        }
+        
+        /* Responsive styles */
+        @media screen and (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .logo {
+                font-size: 2.2rem;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .button {
+                display: block;
+                margin-bottom: 1rem;
+                width: 100%;
+            }
+            
+            .button.primary {
+                margin-right: 0;
+            }
+            
+            .specs-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .deployment-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .feature, .deployment-item {
+                padding: 1.5rem;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="ascii-bg"></div>
+    
+    <header class="terminal">
+        <div class="logo glitch">
+           <i class="fa-brands fa-bitcoin"></i>darkwire<i class="fa-solid fa-message"></i>
+        </div>
+        <h1>The internet is optional. Freedom isn't.</h1>
+        <p class="tagline">$ Send Bitcoin without the internet in censored regions</p>
+        <div class="header-buttons">
+            <a href="#how-it-works" class="button primary">_How It Works</a>
+            <a href="https://github.com/cyb3r17/darkwire" class="button secondary">_Get Documentation</a>
+        </div>
+    </header>
+    
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How darkwire Works</h2>
+            <div class="features">
+                <div class="feature terminal">
+                    <i class="fa-solid fa-satellite-dish feature-icon"></i>
+                    <h3>LoRa-Based Mesh Network</h3>
+                    <p>darkwire uses long-range LoRa radio technology to create a decentralized mesh network that bypasses traditional internet infrastructure entirely.</p>
+                </div>
+                <div class="feature terminal">
+                    <i class="fa-solid fa-hexagon-nodes feature-icon"></i>
+                    <h3>Multi-Hop Transaction Relay</h3>
+                    <p>Signed Bitcoin transactions hop from node to node until reaching a connected access point, ensuring your financial freedom even during blackouts.</p>
+                </div>
+                <div class="feature terminal">
+                    <i class="fa-solid fa-shield feature-icon"></i>
+                    <br>
+                    <h3>Censorship Resistant</h3>
+                    <p>Transactions never touch monitored networks until the final exit node, preserving privacy and bypassing surveillance or censorship efforts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="deployment" id="deployment">
+        <div class="container">
+            <h2 class="section-title">Deployment Methods</h2>
+            <p class="section-desc">darkwire nodes can be deployed in various ways to create resilient networks across challenging environments.</p>
+            <div class="deployment-grid">
+                <div class="deployment-item terminal">
+                    <img src="static/imgs/balloon.jpg" alt="High-Altitude Balloon" class="deployment-image">
+                    <div class="deployment-content">
+                        <h3>High-Altitude Balloon Node</h3>
+                        <p>Weather balloons equipped with darkwire nodes can provide wide-area coverage across controlled borders and restricted regions.</p>
+                    </div>
+                </div>
+                <div class="deployment-item terminal">
+                    <img src="static/imgs/buoy.jpg" alt="Maritime Buoy" class="deployment-image">
+                    <div class="deployment-content">
+                        <h3>Maritime Buoy Node</h3>
+                        <p>Solar-powered buoys create mesh networks across water bodies to bridge communications between territories.</p>
+                    </div>
+                </div>
+                <div class="deployment-item terminal">
+                    <img src="static/imgs/lorabox.png" alt="Portable Transceiver Node" class="deployment-image">
+                    <div class="deployment-content">
+                        <h3>Portable Transceiver Node</h3>
+                        <p>Compact weatherproof enclosures house Arduino and LoRa modules for discrete deployment in urban or rural environments.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="use-cases" id="use-cases">
+        <div class="container">
+            <h2 class="section-title">Deployment Scenarios</h2>
+            <p class="section-desc">/ Strategic placement of darkwire nodes creates communication corridors in restricted areas worldwide /</p>
+            <div class="deployment-grid">
+                <div class="deployment-item terminal">
+                    <img src="static/imgs/englishchannel.png" alt="English Channel" class="deployment-image">
+                    <div class="deployment-content">
+                        <h3>English Channel</h3>
+                        <p>Maritime buoys create a network across waters between nations, enabling censorship-resistant communication corridors.</p>
+                    </div>
+                </div>
+                <div class="deployment-item terminal">
+                    <img src="static/imgs/indotibet.png" alt="Indo-Tibetan Border" class="deployment-image">
+                    <div class="deployment-content">
+                        <h3>Indo-Tibetan Border</h3>
+                        <p>Discreet relay points across mountainous terrain provide transaction access for people in regions with restricted internet.</p>
+                    </div>
+                </div>
+                <div class="deployment-item terminal">
+                    <img src="static/imgs/38thpll.png" alt="38th Parallel" class="deployment-image">
+                    <div class="deployment-content">
+                        <h3>38th Parallel</h3>
+                        <p>High-altitude balloons create a wireless bridge across the Korean border, enabling free financial transactions.</p>
+                    </div>
+                </div>
+                <div class="deployment-item terminal">
+                    <img src="static/imgs/rafah.png" alt="Rafah Crossing" class="deployment-image">
+                    <div class="deployment-content">
+                        <h3>Rafah Crossing</h3>
+                        <p>Portable nodes enable financial sovereignty and critical communications during humanitarian crises and blockades.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="tech-specs terminal" id="tech-specs">
+        <div class="container">
+            <h2 class="section-title">Technical Specifications</h2>
+            <div class="specs-container">
+                <div class="specs-content">
+                    <h2>Hardware Requirements</h2>
+                    <ul class="specs-list">
+                        <li><i class="fa-solid fa-microchip"></i> Arduino UNO (or compatible microcontroller)</li>
+                        <li><i class="fa-solid fa-broadcast-tower"></i> LoRa Transceiver Module (RA-02 or similar)</li>
+                        <li><i class="fa-solid fa-solar-panel"></i> Power source (solar panels, batteries, or direct power)</li>
+                        <li><i class="fa-solid fa-box"></i> Weatherproof enclosure for outdoor deployment</li>
+                        <li><i class="fa-solid fa-wifi"></i> Only one node requires internet access to relay to the Bitcoin network</li>
+                        <li><i class="fa-solid fa-signal"></i> Range: Up to 10km per hop in rural areas, 1-2km in urban environments</li>
+                    </ul>
+                </div>
+                <div class="specs-image terminal">
+                    <img src="static/imgs/darkwire_node.png" alt="darkwire Hardware" style="width:100%;">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta terminal" id="documentation">
+        <div class="container">
+            <h2 class="glitch">Join the Resistance Against Digital Censorship</h2>
+            <p>darkwire is open-source and built for activists, humanitarians, and anyone fighting for financial and communicative freedom.</p>
+            <a href="https://github.com/cyb3r17/darkwire" class="button primary">Download Documentation</a>
+        </div>
+    </section>
+    
+    <footer>
+        <p><span class="glitch">darkwire</span> - The internet is optional. Freedom isn't | This project is licensed under the <a href="https://github.com/cyb3r17/darkwire/blob/main/LICENSE">MIT License</a></p>
+    </footer>
+    
+    <script>
+        // Create ASCII art effect in background
+        document.addEventListener('DOMContentLoaded', function() {
+            const asciiBg = document.querySelector('.ascii-bg');
+            const asciiChars = '01  ░▒▓█ .:;+=%$@#';
+            let ascii = '';
+            
+            for(let i = 0; i < 500; i++) {
+                for(let j = 0; j < 200; j++) {
+                    ascii += asciiChars[Math.floor(Math.random() * asciiChars.length)];
+                }
+                ascii += '\n';
+            }
+            
+            asciiBg.textContent = ascii;
+            
+            // Add terminal effect to elements
+            const terminals = document.querySelectorAll('.terminal');
+            terminals.forEach(term => {
+                term.innerHTML = term.innerHTML.replace(/^(\s*)(.+)$/gm, '$1<span class="line">$2</span>');
+            });
+            
+            // Add glitch effect randomly
+            setInterval(() => {
+                const glitches = document.querySelectorAll('.glitch');
+                const randomGlitch = glitches[Math.floor(Math.random() * glitches.length)];
+                randomGlitch.style.textShadow = '0.05em 0 0 rgba(255,0,0,.75), -0.025em -0.05em 0 rgba(0,255,0,.75), 0.025em 0.05em 0 rgba(0,0,255,.75)';
+                setTimeout(() => {
+                    randomGlitch.style.textShadow = '';
+                }, 100);
+            }, 5000);
+        });
+    </script>
+</body>
+</html>
