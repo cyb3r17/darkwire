@@ -127,7 +127,7 @@ Darkwire is Free and Open Source Software (FOSS!). Contributions are highly welc
 4.  Push to the branch (`git push origin feature/AmazingFeature`).
 5.  Open a Pull Request.
 
-Please ensure your code adheres to the project's style guidelines (if any are established) and includes appropriate tests.
+Please ensure your code adheres to the project's style guidelines and includes appropriate tests.
 
 ## License
 
