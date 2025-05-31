@@ -135,7 +135,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Links
 
-*   **Project Website:** `darkwire.cyb3r17.space` (will be online temporarily)
+*   **Project Website:** `darkwire.cyb3r17.space` (no longer available)
 *   **GitHub Repository:** `github.com/cyb3r17/darkwire` (You are here!)
 *   **Follow Updates (X/Twitter):** `x.com/cyb3r_17`
 
