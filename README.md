@@ -22,9 +22,6 @@
 darkwire is an open-source communication suite focused on decentralization, privacy, and resilience—especially in constrained or adversarial environments. It's currently maintained by a solo developer [(me!)](https://github.com/cyb3r17). It uses LoRa (long range) radio mesh networks to enable cross border wan based communications.
 
 Contributions—whether code, testing, feedback, or ideas—are always welcome. donations help sustain development, but are entirely optional.  
-Donate here:
-- (pls reach out to me for my lightning address)
-- btc: `bc1qh243mxg9637ape9f89fmvrt6wvny5nnxtsv609`
 
 ---
 
