@@ -3,7 +3,7 @@
 
 **The internet is optional. Freedom isn't.**  
 
-> ⚠️ **darkwire is currently undergoing a major rewrite.**
+> ⚠️ **darkwire will not be maintained any longer due to me being occupied by other work, feel free to fork it.**
 
 ---
 
